@@ -16,6 +16,7 @@ export class ProductIndexComponent implements OnInit {
   deleteProduct(id) {
     this.productservice.deleteProduct(id).subscribe(res => {
       console.log('Deleted');
+      this.ngOnInit();
     });
   }
 
