@@ -30,8 +30,9 @@ export class ProductEditComponent implements OnInit {
 
   updateProduct(product_name, product_price, product_cost){
     this.route.params.subscribe(params => {
-      this.productservice.updateProduct(product_name, product_price, product_cost, params['id']);
-      this.router.navigate(['index']);
+      this.productservice.updateProduct(this.angForm.get('product_name').value, product_price, product_cost, params['id']).then(res => {
+        this.router.navigate(['productIndex']);
+      });
     });
   }
 
@@ -39,6 +40,9 @@ export class ProductEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.productservice.editProduct(params['id']).subscribe(res => {
         this.product = res;
+        this.angForm.get('product_name').setValue(this.product.product_name);
+        this.angForm.get('product_price').setValue(this.product.product_price);
+        this.angForm.get('product_cost').setValue(this.product.product_cost);
     });
   });
   }

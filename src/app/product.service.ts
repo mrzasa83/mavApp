@@ -39,12 +39,20 @@ export class ProductService {
       product_price: product_price,
       product_cost: product_cost
     };
-    this
-      .http
-      .post(`${this.uri}/update/${id}`, obj)
-      .subscribe(res => console.log('Done'));
-  };
-
+    let promise = new Promise((resolve, reject) => {
+      this
+        .http
+        .post(`${this.uri}/update/${id}`, obj)
+        .toPromise()
+        .then(
+          res => {
+            console.log("Done");
+            resolve();
+          }
+        )
+    });
+    return promise;
+  }
   deleteProduct(id){
     return this
         .http
